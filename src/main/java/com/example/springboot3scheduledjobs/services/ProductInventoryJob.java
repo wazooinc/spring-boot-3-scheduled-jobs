@@ -50,10 +50,10 @@ public class ProductInventoryJob {
     @Scheduled(cron = "*/15 * * * * *")
     public void ProductInventoryCount() {
         List<Product> products = productService.getAll();
-        AtomicInteger count = new AtomicInteger(0);
-        products.forEach(product -> {
-            count.addAndGet(product.getQuantity());
-        });
+        int count = 0;
+        for (int i = 0; i < products.size(); i++) {
+            count = count + products.get(i).getQuantity();
+        }
 
         log.info("{} Products with a total inventory size of {}", products.size(), count);
     }
